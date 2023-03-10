@@ -5,6 +5,7 @@ import './util/color.dart';
 import 'package:flutter/material.dart';
 import './http/dao/login_dao.dart';
 import './page/login/register.dart';
+import './page/login/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,16 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: whiteColor,
-      ),
-      home: RegisterPage(
-        onJumpToLogin: () {
-          // 注册完成
-        },
-      ),
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: whiteColor,
+        ),
+        home: LoginPage());
   }
 }
 

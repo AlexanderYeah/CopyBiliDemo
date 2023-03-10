@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../widget/login_input.dart';
 import '../../widget/appbar.dart';
 import '../../widget/login_effect.dart';
+import '../../widget/login_button.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback onJumpToLogin;

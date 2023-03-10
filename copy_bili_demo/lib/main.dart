@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: whiteColor,
       ),
-      home: RegisterPage(),
+      home: RegisterPage(
+        onJumpToLogin: () {
+          // 注册完成
+        },
+      ),
     );
   }
 }

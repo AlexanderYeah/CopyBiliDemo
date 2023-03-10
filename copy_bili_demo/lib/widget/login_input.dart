@@ -36,7 +36,7 @@ class _LoginInputState extends State<LoginInput> {
     super.initState();
     _focusNode.addListener(() {
       // 监听是否获取光标
-      print("Has focus:${_focusNode.hasFocus}");
+
       if (widget.focusChange != null) {
         widget.focusChange(_focusNode.hasFocus);
       }

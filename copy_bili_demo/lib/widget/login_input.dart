@@ -22,7 +22,7 @@ class LoginInput extends StatefulWidget {
       required this.focusChange,
       this.lineStretch = false,
       this.obscureText = false,
-      required this.keyboardType});
+      this.keyboardType = TextInputType.text});
 
   @override
   State<LoginInput> createState() => _LoginInputState();
@@ -63,9 +63,11 @@ class _LoginInputState extends State<LoginInput> {
       style: TextStyle(
           fontSize: 16, color: Colors.black, fontWeight: FontWeight.w300),
       // 颜色设置成自己定义的主色
-      cursorColor: primary,
+      cursorColor: primaryColor,
       // 输入框的样式
       decoration: InputDecoration(
+          // 不要给输入框设置边框
+          border: InputBorder.none,
           // 左右的边距各20
           contentPadding: EdgeInsets.only(left: 20, right: 20),
           hintText: widget.hintText,
@@ -88,6 +90,14 @@ class _LoginInputState extends State<LoginInput> {
             ),
             _inputWidget()
           ],
+        ),
+        // 底部设置一条横线
+        Padding(
+          padding: EdgeInsets.only(left: !widget.lineStretch ? 15 : 0),
+          child: Divider(
+            height: 1,
+            thickness: 0.6,
+          ),
         )
       ],
     );

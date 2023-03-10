@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:copy_bili_demo/db/sk_cache.dart';
+import './util/color.dart';
 import 'package:flutter/material.dart';
 import './http/dao/login_dao.dart';
+import './page/login/register.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +19,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: whiteColor,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: RegisterPage(),
     );
   }
 }

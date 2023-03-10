@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import '../../db/sk_cache.dart';
+
 import '/http/core/sk_net.dart';
 import 'package:copy_bili_demo/http/request/base_request.dart';
 
@@ -29,7 +33,7 @@ class LoginDao {
         .add("verifyCode", verifyCode);
     // 发送请求 回调结果
     var result = await SKNet.getInstance().fire(request);
-    print(result);
+
     return result;
   }
 }

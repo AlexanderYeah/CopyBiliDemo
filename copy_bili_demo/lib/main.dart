@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:copy_bili_demo/db/sk_cache.dart';
 import 'package:flutter/material.dart';
 import './http/dao/login_dao.dart';
 
@@ -41,7 +44,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _test() async {
     var result = await LoginDao.login("leonardo", "123456");
-    print(result);
+    // 保存登录token
+    // 保存登录的access_token
+    var res = json.decode(result);
+    print(res);
+    if (res["data"]["access_token"] != null) {
+      SKCache.getInstance()
+          .setString("access_token", res["data"]["access_token"]);
+    }
+    print(SKCache.getInstance().get("access_token"));
   }
 
   @override

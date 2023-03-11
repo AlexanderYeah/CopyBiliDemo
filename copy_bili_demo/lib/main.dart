@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:copy_bili_demo/db/sk_cache.dart';
+import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:flutter/gestures.dart';
 import './util/color.dart';
 import 'package:flutter/material.dart';
@@ -28,17 +29,33 @@ class _MyAppState extends State<MyApp> {
       BiliRouteInfomationParser();
   @override
   Widget build(BuildContext context) {
-    var widget = Router(
-      routeInformationParser: _routeInfomationParser,
-      routerDelegate: _routerDelegate,
-      routeInformationProvider: PlatformRouteInformationProvider(
-        //
-        //初始化路由
-        initialRouteInformation: RouteInformation(location: "/"),
-      ),
-    );
-    return MaterialApp(
-      home: widget,
+    return FutureBuilder<SKCache>(
+      future: SKCache.preInit(),
+      // initialData: InitialData,
+
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // 等待加载完成之后
+        var widget = snapshot.connectionState == ConnectionState.done
+            ? Router(
+                // web 应用的话 要设置parser 和 provider
+                // routeInformationParser: _routeInfomationParser,
+                routerDelegate: _routerDelegate,
+                // routeInformationProvider: PlatformRouteInformationProvider(
+                //   //
+                //   //初始化路由
+                //   initialRouteInformation: RouteInformation(location: "/"),
+                // )
+              )
+            : Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+        return MaterialApp(
+          home: widget,
+          theme: ThemeData(primarySwatch: whiteColor),
+        );
+      },
     );
   }
 }
@@ -55,22 +72,71 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   List<MaterialPage> pages = [];
+  VideoModel? videoModel;
+  // 默认设置成首页
+  RouteStatus _routeStatus = RouteStatus.home;
 
-  late BiliRoutePath path;
+  bool get hasLogin {
+    return LoginDao.isUserLogin();
+  }
+
+  RouteStatus get routeStatus {
+    // 拦截路由状态 进行判断
+    // 当现在的路由状态不在注册页面并且没有登录的时候 去跳转登录页面
+    if (_routeStatus != RouteStatus.register && !hasLogin) {
+      // 去登录
+      _routeStatus = RouteStatus.login;
+    }
+    return _routeStatus;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // 构建路由栈
-    pages = [
-      pageWrap(HomePage(
-        jumpToDetail: (value) {
+    // 管理路由堆栈
+    // 首先获取打开的页面是否在路由堆栈里面
+    int idx = getPageIndex(pages, _routeStatus);
+
+    List<MaterialPage> tempPages = pages;
+    if (idx != -1) {
+      // 要打开的页面已经存在，则将该页面和它上面的所有页面都进行出栈
+      // 栈中只允许有一个同样的页面实例,此处的操作是把当前的页面和之前的页面 全部出栈，后面在进行添加
+      tempPages = tempPages.sublist(0, idx);
+    }
+    // 创建首页
+    var page;
+    // 跳转首页的时候 将栈其他页面进行出栈 因为首页不可以回退
+    if (routeStatus == RouteStatus.home) {
+      pages.clear();
+      page = pageWrap(HomePage(
+        jumpToDetail: (model) {
+          this.videoModel = model;
           print("跳转详情");
+
+          _routeStatus = RouteStatus.detail;
           // 更新
           notifyListeners();
         },
-      )),
-      pageWrap(VideoDetailPage()),
-    ];
+      ));
+    } else if (routeStatus == RouteStatus.detail) {
+      page = pageWrap(VideoDetailPage());
+    } else if (routeStatus == RouteStatus.register) {
+      page = pageWrap(RegisterPage(
+        onJumpToLogin: () {
+          // 跳转登录页
+          _routeStatus = RouteStatus.login;
+          // 更新
+          notifyListeners();
+        },
+      ));
+    } else if (routeStatus == RouteStatus.login) {
+      page = pageWrap(LoginPage());
+    }
 
+    // 重新创建一个数组 否则pages 因为引用没有改变路由而不会生效
+    // 复制tempPages 并且添加page
+    tempPages = [...tempPages, page];
+    // 赋值给真实的页面
+    pages = tempPages;
     // TODO: implement build
     return Navigator(
         key: navigatorKey,
@@ -85,9 +151,9 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   }
 
   @override
-  Future<void> setNewRoutePath(BiliRoutePath path) async {
+  Future<void> setNewRoutePath(BiliRoutePath configuration) {
     // TODO: implement setNewRoutePath
-    this.path = path;
+    throw UnimplementedError();
   }
 }
 

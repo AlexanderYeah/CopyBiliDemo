@@ -9,6 +9,15 @@ import '../request/login_request.dart';
 import '../request/register_request.dart';
 
 class LoginDao {
+  // 获取本地的access_token 从而得知用户是否登录
+  static isUserLogin() {
+    if (SKCache.getInstance().get("access_token") != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   //  登录方法
   static login(String username, String password) {
     return _send(username, password);

@@ -1,3 +1,5 @@
+import 'package:copy_bili_demo/db/sk_cache.dart';
+import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/util/color.dart';
 
 import '../../widget/appbar.dart';
@@ -10,7 +12,7 @@ import '../../widget/login_button.dart';
 import '../../widget/toast.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -49,12 +51,14 @@ class _LoginPageState extends State<LoginPage> {
     try {
       var result = await LoginDao.login(_username, _password);
       var res = json.decode(result);
+
       if (res["code"] == 200) {
+        print(res);
         showToast("登录成功");
-        print("登录成功");
-        // if (widget.onJumpToLogin != null) {
-        //   widget.onJumpToLogin();
-        // }
+        SKCache.getInstance()
+            .setString("access_token", res["data"]["access_token"]);
+        print(SKCache.getInstance().get("access_token"));
+        SKNavigator.getIntance().onJumpTo(RouteStatus.home);
       }
     } catch (error) {
       print(error);
@@ -63,7 +67,9 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("登录", "注册", () {}),
+      appBar: appBar("登录", "注册", () {
+        SKNavigator.getIntance().onJumpTo(RouteStatus.register);
+      }),
       body: Container(
         child: ListView(
           children: [

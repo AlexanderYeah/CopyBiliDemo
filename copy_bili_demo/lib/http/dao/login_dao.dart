@@ -33,13 +33,15 @@ class LoginDao {
     // 证明是注册
     if (verifyCode != null) {
       request = RegisterRequest();
+      request
+          .add("username", username)
+          .add("password", password)
+          .add("verifyCode", verifyCode);
     } else {
       request = LoginRequest();
+      request.add("username", username).add("password", password);
     }
-    request
-        .add("username", username)
-        .add("password", password)
-        .add("verifyCode", verifyCode);
+
     // 发送请求 回调结果
     var result = await SKNet.getInstance().fire(request);
 

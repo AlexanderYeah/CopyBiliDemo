@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:copy_bili_demo/db/sk_cache.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
+import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/gestures.dart';
 import './util/color.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,14 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   //为Navigator设置一个key，必要的时候可以通过navigatorKey.currentState来获取到NavigatorState对象
   late final GlobalKey<NavigatorState> navigatorKey;
 
-  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+  BiliRouteDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
+    // 实现路由跳转逻辑
+    SKNavigator.getIntance().registerRouteJump(
+        RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
+      _routeStatus = routeStatus;
+      notifyListeners();
+    }));
+  }
 
   List<MaterialPage> pages = [];
   VideoModel? videoModel;
@@ -84,6 +92,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     // 拦截路由状态 进行判断
     // 当现在的路由状态不在注册页面并且没有登录的时候 去跳转登录页面
     if (_routeStatus != RouteStatus.register && !hasLogin) {
+      print("未登录未登录未登录${hasLogin}");
       // 去登录
       _routeStatus = RouteStatus.login;
     }
@@ -107,27 +116,11 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     // 跳转首页的时候 将栈其他页面进行出栈 因为首页不可以回退
     if (routeStatus == RouteStatus.home) {
       pages.clear();
-      page = pageWrap(HomePage(
-        jumpToDetail: (model) {
-          this.videoModel = model;
-          print("跳转详情");
-
-          _routeStatus = RouteStatus.detail;
-          // 更新
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(HomePage());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage());
     } else if (routeStatus == RouteStatus.register) {
-      page = pageWrap(RegisterPage(
-        onJumpToLogin: () {
-          // 跳转登录页
-          _routeStatus = RouteStatus.login;
-          // 更新
-          notifyListeners();
-        },
-      ));
+      page = pageWrap(RegisterPage());
     } else if (routeStatus == RouteStatus.login) {
       page = pageWrap(LoginPage());
     }
@@ -142,10 +135,19 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
         key: navigatorKey,
         pages: pages,
         onPopPage: ((route, result) {
+          print("object");
+          if ((route.settings as MaterialPage).child is LoginPage) {
+            if (!hasLogin) {
+              showWarnningToast("请先登录");
+              return false;
+            }
+          }
           // 在这里可以控制是否可以返回上一页
           if (!route.didPop(result)) {
             return false;
           }
+          // 返回上一页之后  移除最后一个
+          pages.removeLast();
           return true;
         }));
   }

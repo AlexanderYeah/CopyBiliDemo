@@ -50,3 +50,40 @@ class RouteStatusInfo {
   final Widget page;
   RouteStatusInfo(this.routeStatus, this.page);
 }
+
+// 监听路由页面跳转 感知当前页面是否在压后台
+class SKNavigator extends _RouteJumpListener {
+  static SKNavigator? _instance;
+  var _routeJump;
+  static SKNavigator getIntance() {
+    if (_instance == null) {
+      _instance = SKNavigator();
+    }
+    return _instance!;
+  }
+
+  // 注册路由的跳转逻辑
+  void registerRouteJump(RouteJumpListener routeJumpListener) {
+    this._routeJump = routeJumpListener;
+  }
+
+  @override
+  void onJumpTo(RouteStatus status, {Map? args}) {
+    // TODO: implement onJumpTo
+    _routeJump.onJumpTo(status, args: args);
+  }
+}
+
+// 定义一个抽象类 用来跳转
+abstract class _RouteJumpListener {
+  // 跳转的方法
+  void onJumpTo(RouteStatus status, {Map args});
+}
+
+// 定义一个类型
+typedef OnJumpTo = void Function(RouteStatus status, {Map args});
+
+class RouteJumpListener {
+  final OnJumpTo onJumpTo;
+  RouteJumpListener({required this.onJumpTo});
+}

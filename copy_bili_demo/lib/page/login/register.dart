@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:copy_bili_demo/http/dao/login_dao.dart';
+import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/util/string_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +11,7 @@ import '../../widget/login_effect.dart';
 import '../../widget/login_button.dart';
 
 class RegisterPage extends StatefulWidget {
-  final VoidCallback onJumpToLogin;
-
-  const RegisterPage({super.key, required this.onJumpToLogin});
-
+  const RegisterPage({super.key});
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -58,10 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
       var result = await LoginDao.login(_username, _password);
       var res = json.decode(result);
       if (res["code"] == 200) {
-        print("注册成功");
-        // if (widget.onJumpToLogin != null) {
-        //   widget.onJumpToLogin();
-        // }
+        SKNavigator.getIntance().onJumpTo(RouteStatus.home);
       }
     } catch (error) {
       print(error);
@@ -70,15 +65,16 @@ class _RegisterPageState extends State<RegisterPage> {
 
   /*****---UI-----***/
   _loginBtn() {
-    return InkWell(
-      onTap: () {
+    return LoginButton(
+      "注册",
+      enable: _isEnableLogin,
+      onPressed: () {
         if (_isEnableLogin) {
           _verifyParams();
         } else {
           print("输入错误,不可登陆");
         }
       },
-      child: Text("注册"),
     );
   }
 
@@ -86,7 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar("注册", "登录", () {
-        print("登录");
+        SKNavigator.getIntance().onJumpTo(RouteStatus.login);
       }),
       body: Container(
         child: ListView(
@@ -127,6 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   });
                 }),
             // 登录按钮
+
             Padding(
               padding: EdgeInsets.only(top: 20, left: 20, right: 20),
               child: _loginBtn(),

@@ -9,6 +9,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var listener;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // SKNavigator.getIntance().addListener(this.listener = (current, pre) {
+    //   // print("current:${current.page}");
+    //   // print("previous:${pre.page}");
+    //   if (widget == current.page || current.page is HomePage) {
+    //     print("打开了首页");
+    //   }
+    // });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    // SKNavigator.getIntance().removeListener(this.listener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -12,6 +12,7 @@ import './page/login/login.dart';
 import './page/tab/home_page.dart';
 import './model/video_model.dart';
 import './page/video_detail_page.dart';
+import './navigator/bottom_navigator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -116,7 +117,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     // 跳转首页的时候 将栈其他页面进行出栈 因为首页不可以回退
     if (routeStatus == RouteStatus.home) {
       pages.clear();
-      page = pageWrap(HomePage());
+      page = pageWrap(BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
       page = pageWrap(VideoDetailPage());
     } else if (routeStatus == RouteStatus.register) {
@@ -130,6 +131,10 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     tempPages = [...tempPages, page];
     // 赋值给真实的页面
     pages = tempPages;
+    //1--- 这个是打开新页面的时候 通知路由发生变化
+    //堆栈信息发生变化的时候 通知页面的变化
+    SKNavigator.getIntance().notify(tempPages, pages);
+
     // TODO: implement build
     return Navigator(
         key: navigatorKey,
@@ -146,8 +151,11 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
           if (!route.didPop(result)) {
             return false;
           }
+          //2--- 这个是返回的时候 通知路由发生变化
           // 返回上一页之后  移除最后一个
+          var tempPages = [...pages];
           pages.removeLast();
+          SKNavigator.getIntance().notify(tempPages, pages);
           return true;
         }));
   }

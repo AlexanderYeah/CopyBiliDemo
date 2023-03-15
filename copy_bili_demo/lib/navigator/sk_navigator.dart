@@ -17,6 +17,9 @@ enum RouteStatus {
   unknown,
 }
 
+typedef RouteChangeListener = Function(
+    RouteStatusInfo current, RouteStatusInfo pre);
+
 // 获取路由在堆栈中的位置
 getPageIndex(List<MaterialPage> pages, RouteStatus status) {
   for (var i = 0; i < pages.length; i++) {
@@ -30,7 +33,6 @@ getPageIndex(List<MaterialPage> pages, RouteStatus status) {
 }
 
 // 获取路由的状态
-
 RouteStatus getStatus(MaterialPage page) {
   if (page.child is LoginPage) {
     return RouteStatus.login;
@@ -55,6 +57,8 @@ class RouteStatusInfo {
 class SKNavigator extends _RouteJumpListener {
   static SKNavigator? _instance;
   var _routeJump;
+  List<RouteChangeListener> _listeners = [];
+  RouteStatusInfo? _current;
   static SKNavigator getIntance() {
     if (_instance == null) {
       _instance = SKNavigator();
@@ -65,6 +69,38 @@ class SKNavigator extends _RouteJumpListener {
   // 注册路由的跳转逻辑
   void registerRouteJump(RouteJumpListener routeJumpListener) {
     this._routeJump = routeJumpListener;
+  }
+
+  void addListener(RouteChangeListener listener) {
+    if (!_listeners.contains(listener)) {
+      _listeners.add(listener);
+    }
+  }
+
+  void removeListener(RouteChangeListener listener) {
+    if (_listeners.contains(listener)) {
+      _listeners.remove(listener);
+    }
+  }
+
+  // 通知路由页面变化
+  void notify(
+      List<MaterialPage> currentPages, List<MaterialPage> previousPages) {
+    if (currentPages == previousPages) {
+      return;
+    }
+    //  当前的页面
+    var current =
+        RouteStatusInfo(getStatus(currentPages.last), currentPages.last.child);
+    _notify(current);
+  }
+
+  void _notify(RouteStatusInfo current) {
+    print(current.routeStatus);
+    _listeners.forEach((listener) {
+      listener(current, _current!);
+    });
+    _current = current;
   }
 
   @override
@@ -83,6 +119,7 @@ abstract class _RouteJumpListener {
 // 定义一个类型
 typedef OnJumpTo = void Function(RouteStatus status, {Map args});
 
+// 这里之所以创建一个类 让SKNavigator 持有，是因为这里方便扩展，可以添加其他的方法
 class RouteJumpListener {
   final OnJumpTo onJumpTo;
   RouteJumpListener({required this.onJumpTo});

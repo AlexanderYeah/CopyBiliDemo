@@ -7,6 +7,7 @@ import 'package:copy_bili_demo/page/home_tab_page.dart';
 import 'package:copy_bili_demo/util/color.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
+import '../../core/sk_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
   var listener;
   var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "日常", "综合", "手机游戏", "短片*手机*配音"];
   List _catrgoryList = [];

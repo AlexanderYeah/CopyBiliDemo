@@ -5,12 +5,14 @@ import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/page/home_tab_page.dart';
 import 'package:copy_bili_demo/util/color.dart';
+import 'package:copy_bili_demo/widget/navigation_bar.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
 import '../../core/sk_state.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final ValueChanged<int>? onJumpTo;
+  const HomePage({super.key, this.onJumpTo});
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -78,11 +80,68 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
         }).toList());
   }
 
+  _appBar() {
+    return Padding(
+      padding: EdgeInsets.only(left: 15, right: 15),
+      child: Row(
+        children: [
+          InkWell(
+            onTap: () {
+              print("object");
+              if (widget.onJumpTo != null) {
+                widget.onJumpTo!(3);
+              }
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(23),
+              child: Image(
+                height: 46,
+                width: 46,
+                image: AssetImage("images/avatar.png"),
+              ),
+            ),
+          ),
+          // 输入框除了左右两边填充所有的内容
+          Expanded(
+              child: Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                padding: EdgeInsets.only(left: 10),
+                height: 32,
+                alignment: Alignment.centerLeft,
+                child: Icon(Icons.search, color: Colors.grey),
+                decoration: BoxDecoration(color: Colors.grey[100]),
+              ),
+            ),
+          )),
+          Icon(
+            Icons.explore_outlined,
+            color: Colors.grey,
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Icon(
+              Icons.mail_outline,
+              color: Colors.grey,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
+          MyNavigationBar(
+            child: _appBar(),
+            height: 50,
+            color: Colors.white,
+          ),
           Container(
             margin: EdgeInsets.only(top: 30),
             child: _tabbar(),

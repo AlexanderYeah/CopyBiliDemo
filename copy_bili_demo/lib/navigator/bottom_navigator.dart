@@ -16,6 +16,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
   final _defaultColor = Colors.grey;
   final _activeColor = primaryColor;
   int _currentIdx = 0;
+  List<Widget> _pages = [];
   final PageController _controller = PageController(initialPage: 0);
 
   _bottomItem(String title, IconData icon, int index) {
@@ -24,6 +25,19 @@ class _BottomNavigatorState extends State<BottomNavigator> {
 
   @override
   Widget build(BuildContext context) {
+    _pages = [
+      HomePage(
+        onJumpTo: (idx) {
+          setState(() {
+            _currentIdx = idx;
+            _controller.jumpToPage(idx);
+          });
+        },
+      ),
+      RankingPage(),
+      FavoritePage(),
+      ProfilePage()
+    ];
     return Scaffold(
       body: PageView(
         onPageChanged: (value) {
@@ -35,7 +49,7 @@ class _BottomNavigatorState extends State<BottomNavigator> {
         // 这个设置可以禁止pageview 进行滚动
         physics: NeverScrollableScrollPhysics(),
         controller: _controller,
-        children: [HomePage(), RankingPage(), FavoritePage(), ProfilePage()],
+        children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (idx) {

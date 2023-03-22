@@ -11,7 +11,7 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("我的"),
+      child: Text("收藏"),
     );
   }
 }

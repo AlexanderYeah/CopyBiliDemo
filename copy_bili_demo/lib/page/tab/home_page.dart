@@ -1,7 +1,11 @@
+import 'package:copy_bili_demo/http/core/sk_error.dart';
+import 'package:copy_bili_demo/http/dao/home_dao.dart';
+import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/page/home_tab_page.dart';
 import 'package:copy_bili_demo/util/color.dart';
+import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,19 +17,44 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   var listener;
   var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "日常", "综合", "手机游戏", "短片*手机*配音"];
+  List _catrgoryList = [];
+  List _bannerList = [];
   TabController? _controller;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // 实例化controller
-    _controller = TabController(length: this.tabs.length, vsync: this);
+
+    _loadData();
+  }
+
+  // 加载数据
+  _loadData() async {
+    try {
+      HomeModel h_model = await HomeDao.get("推荐");
+      // 根据服务端返回的数据动态的创建列表
+      if (h_model.catrgoryList != null) {
+        // 实例化controller
+        _controller =
+            TabController(length: h_model.catrgoryList!.length, vsync: this);
+        setState(() {
+          _catrgoryList = h_model.catrgoryList!;
+          _bannerList = h_model.bannerList!;
+        });
+      }
+    } on NeedAuth catch (e) {
+      // 需要登录
+      showWarnningToast("需要登录");
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
     // SKNavigator.getIntance().removeListener(this.listener);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -38,7 +67,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         indicator: UnderlineTabIndicator(
             borderSide: BorderSide(color: primaryColor, width: 2),
             insets: EdgeInsets.only(left: 10, right: 10)),
-        tabs: tabs.map((title) {
+        tabs: _catrgoryList.map((title) {
           return Tab(
             child: Text(
               title,
@@ -62,9 +91,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Flexible(
               child: TabBarView(
                   controller: _controller,
-                  children: tabs.map((tab) {
+                  children: _catrgoryList.map((title) {
                     return HomeTabPage(
-                      name: tab,
+                      name: title,
+                      bannerList: title == "推荐" ? _bannerList : null,
                     );
                   }).toList()))
         ],

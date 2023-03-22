@@ -1,8 +1,10 @@
+import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeTabPage extends StatefulWidget {
   final String? name;
-  const HomeTabPage({super.key, this.name});
+  final List? bannerList;
+  const HomeTabPage({super.key, this.name, this.bannerList});
 
   @override
   State<HomeTabPage> createState() => _HomeTabPageState();

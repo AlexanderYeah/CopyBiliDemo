@@ -145,7 +145,7 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
             color: Colors.white,
           ),
           Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: EdgeInsets.only(top: 0),
             child: _tabbar(),
           ),
           // tabbarView 和 tabbar 配合使用

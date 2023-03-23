@@ -22,6 +22,7 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
   var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "日常", "综合", "手机游戏", "短片*手机*配音"];
   List _catrgoryList = [];
   List _bannerList = [];
+  List _videoList = [];
   TabController? _controller;
   @override
   void initState() {
@@ -43,6 +44,7 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
         setState(() {
           _catrgoryList = h_model.catrgoryList!;
           _bannerList = h_model.bannerList!;
+          _videoList = h_model.videoList!;
         });
       }
     } on NeedAuth catch (e) {
@@ -153,9 +155,9 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
                   controller: _controller,
                   children: _catrgoryList.map((title) {
                     return HomeTabPage(
-                      name: title,
-                      bannerList: title == "推荐" ? _bannerList : null,
-                    );
+                        name: title,
+                        bannerList: title == "推荐" ? _bannerList : null,
+                        videoList: _videoList);
                   }).toList()))
         ],
       ),

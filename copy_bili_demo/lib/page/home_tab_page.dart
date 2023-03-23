@@ -20,6 +20,10 @@ class _HomeTabPageState extends State<HomeTabPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [if (widget.bannerList != null) _banner()]);
+    // 移除ListView 默认的上方的边距
+    return MediaQuery.removeViewPadding(
+        removeTop: true,
+        context: context,
+        child: ListView(children: [if (widget.bannerList != null) _banner()]));
   }
 }

@@ -42,6 +42,7 @@ class _HomeTabPageState extends State<HomeTabPage> {
               Padding(padding: EdgeInsets.only(bottom: 8), child: _banner())),
     ];
     temp.addAll(_itemCardList());
+    print(temp.length);
     return temp;
   }
 
@@ -51,13 +52,17 @@ class _HomeTabPageState extends State<HomeTabPage> {
     return MediaQuery.removeViewPadding(
         removeTop: true,
         context: context,
-        child: StaggeredGrid.count(
-          // 滚动方向往下走的
-          axisDirection: AxisDirection.down,
-          crossAxisCount: 2,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
-          children: _combine(),
+        child: ListView(
+          children: [
+            StaggeredGrid.count(
+              // 滚动方向往下走的
+              axisDirection: AxisDirection.down,
+              crossAxisCount: 2,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
+              children: _combine(),
+            )
+          ],
         ));
   }
 }

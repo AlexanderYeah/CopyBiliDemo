@@ -5,6 +5,7 @@ import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/page/home_tab_page.dart';
 import 'package:copy_bili_demo/util/color.dart';
+import 'package:copy_bili_demo/widget/loading_container.dart';
 import 'package:copy_bili_demo/widget/navigation_bar.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +25,11 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
   List _bannerList = [];
   List _videoList = [];
   TabController? _controller;
+  bool _isLoading = true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
     _loadData();
   }
 
@@ -45,6 +46,7 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
           _catrgoryList = h_model.catrgoryList!;
           _bannerList = h_model.bannerList!;
           _videoList = h_model.videoList!;
+          _isLoading = false;
         });
       }
     } on NeedAuth catch (e) {
@@ -137,30 +139,31 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          MyNavigationBar(
-            child: _appBar(),
-            height: 50,
-            color: Colors.white,
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 0),
-            child: _tabbar(),
-          ),
-          // tabbarView 和 tabbar 配合使用
-          // tabbarView 和 tabbar 之所以能够联动 是因为共同一个controller
-          Flexible(
-              child: TabBarView(
-                  controller: _controller,
-                  children: _catrgoryList.map((title) {
-                    return HomeTabPage(
-                        name: title,
-                        bannerList: title == "推荐" ? _bannerList : null,
-                        videoList: _videoList);
-                  }).toList()))
-        ],
-      ),
-    );
+        body: LoadingContainer(
+            isLoading: false,
+            child: Column(
+              children: [
+                MyNavigationBar(
+                  child: _appBar(),
+                  height: 50,
+                  color: Colors.white,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 0),
+                  child: _tabbar(),
+                ),
+                // tabbarView 和 tabbar 配合使用
+                // tabbarView 和 tabbar 之所以能够联动 是因为共同一个controller
+                Flexible(
+                    child: TabBarView(
+                        controller: _controller,
+                        children: _catrgoryList.map((title) {
+                          return HomeTabPage(
+                              name: title,
+                              bannerList: title == "推荐" ? _bannerList : null,
+                              videoList: _videoList);
+                        }).toList()))
+              ],
+            )));
   }
 }

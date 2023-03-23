@@ -1,6 +1,7 @@
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/util/format_util.dart';
+import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -94,13 +95,14 @@ class VideoCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
+        cachedImage(videoMo.cover!, width: size.width / 2 - 10, height: 120),
         // 淡入淡出的效果
-        FadeInImage.memoryNetwork(
-          height: 120,
-          placeholder: kTransparentImage,
-          image: videoMo.cover!,
-          fit: BoxFit.cover,
-        ),
+        // FadeInImage.memoryNetwork(
+        //   height: 120,
+        //   placeholder: kTransparentImage,
+        //   image: videoMo.cover!,
+        //   fit: BoxFit.cover,
+        // ),
         // 图片上浮动的文字
         // 这个部分的内容 整条 居在下面 左右填满
         Positioned(

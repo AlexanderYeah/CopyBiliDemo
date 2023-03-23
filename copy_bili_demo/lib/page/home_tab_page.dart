@@ -15,7 +15,8 @@ class HomeTabPage extends StatefulWidget {
   State<HomeTabPage> createState() => _HomeTabPageState();
 }
 
-class _HomeTabPageState extends State<HomeTabPage> {
+class _HomeTabPageState extends State<HomeTabPage>
+    with AutomaticKeepAliveClientMixin {
   _banner() {
     return Padding(
         padding: EdgeInsets.only(left: 8, right: 8),
@@ -65,4 +66,8 @@ class _HomeTabPageState extends State<HomeTabPage> {
           ],
         ));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

@@ -31,7 +31,6 @@ class _VideoViewState extends State<VideoView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     // 初始化播放器
     _videoPlayController =
         VideoPlayerController.asset("assets/big_buck_bunny.mp4");
@@ -41,6 +40,7 @@ class _VideoViewState extends State<VideoView> {
       autoPlay: false,
       looping: widget.looping,
       aspectRatio: widget.aspectRatio,
+      //  下面是自定义播放器的UI
     );
   }
 

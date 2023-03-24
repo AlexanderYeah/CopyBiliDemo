@@ -13,7 +13,6 @@ class VideoDetailPage extends StatefulWidget {
 class _VideoDetailPageState extends State<VideoDetailPage> {
   _videoView() {
     if (widget.videoMo != null) {
-      print(widget.videoMo!.url);
       return VideoView(
           url: widget.videoMo!.url!, cover: widget.videoMo!.cover!);
     } else {

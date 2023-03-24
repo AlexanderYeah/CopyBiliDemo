@@ -139,8 +139,8 @@ class VideoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          SKNavigator.getIntance()
-              .onJumpTo(RouteStatus.detail, args: {"videoMo": videoMo});
+          // SKNavigator.getIntance()
+          //     .onJumpTo(RouteStatus.detail, args: {"videoMo": videoMo});
         },
         child: SizedBox(
           height: 300,

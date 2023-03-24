@@ -1,5 +1,6 @@
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
+import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
@@ -137,23 +138,27 @@ class VideoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+        onTap: () {
+          SKNavigator.getIntance()
+              .onJumpTo(RouteStatus.detail, args: {"videoMo": videoMo});
+        },
         child: SizedBox(
-      height: 300,
-      child: Card(
-          // 取消卡片的默认边距
-          margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 图片区域的显示
-                _itemImage(context),
-                // 底部的标题区域
-                _infoText()
-              ],
-            ),
-          )),
-    ));
+          height: 300,
+          child: Card(
+              // 取消卡片的默认边距
+              margin: EdgeInsets.only(left: 4, right: 4, bottom: 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 图片区域的显示
+                    _itemImage(context),
+                    // 底部的标题区域
+                    _infoText()
+                  ],
+                ),
+              )),
+        ));
   }
 }

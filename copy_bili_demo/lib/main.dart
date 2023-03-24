@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:copy_bili_demo/db/sk_cache.dart';
+import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/gestures.dart';
@@ -26,14 +27,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   RouterDelegate _routerDelegate = BiliRouteDelegate();
-  BiliRouteInfomationParser _routeInfomationParser =
-      BiliRouteInfomationParser();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SKCache>(
       future: SKCache.preInit(),
       // initialData: InitialData,
-
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         // 等待加载完成之后
         var widget = snapshot.connectionState == ConnectionState.done
@@ -75,12 +73,15 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
     SKNavigator.getIntance().registerRouteJump(
         RouteJumpListener(onJumpTo: (RouteStatus routeStatus, {Map? args}) {
       _routeStatus = routeStatus;
+      if (routeStatus == RouteStatus.detail) {
+        this.videoModel = args!['videoMo'];
+      }
       notifyListeners();
     }));
   }
 
   List<MaterialPage> pages = [];
-  VideoModel? videoModel;
+  VideoList? videoModel;
   // 默认设置成首页
   RouteStatus _routeStatus = RouteStatus.home;
 
@@ -95,6 +96,10 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       print("未登录未登录未登录${hasLogin}");
       // 去登录
       _routeStatus = RouteStatus.login;
+    } else if (videoModel != null) {
+      return _routeStatus = RouteStatus.detail;
+    } else {
+      return _routeStatus;
     }
     return _routeStatus;
   }
@@ -118,7 +123,7 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       pages.clear();
       page = pageWrap(BottomNavigator());
     } else if (routeStatus == RouteStatus.detail) {
-      page = pageWrap(VideoDetailPage());
+      page = pageWrap(VideoDetailPage(videoMo: videoModel));
     } else if (routeStatus == RouteStatus.register) {
       page = pageWrap(RegisterPage());
     } else if (routeStatus == RouteStatus.login) {
@@ -166,19 +171,19 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
   }
 }
 
-// 解析我们定义的数据类
-class BiliRouteInfomationParser extends RouteInformationParser<BiliRoutePath> {
-  @override
-  Future<BiliRoutePath> parseRouteInformation(
-      RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location!);
-    print("uri:$uri");
-    if (uri.pathSegments.length == 0) {
-      return BiliRoutePath.home();
-    }
-    return BiliRoutePath.detail();
-  }
-}
+// // 解析我们定义的数据类
+// class BiliRouteInfomationParser extends RouteInformationParser<BiliRoutePath> {
+//   @override
+//   Future<BiliRoutePath> parseRouteInformation(
+//       RouteInformation routeInformation) async {
+//     final uri = Uri.parse(routeInformation.location!);
+//     print("uri:$uri");
+//     if (uri.pathSegments.length == 0) {
+//       return BiliRoutePath.home();
+//     }
+//     return BiliRoutePath.detail();
+//   }
+// }
 
 class BiliRoutePath {
   final String loaction;

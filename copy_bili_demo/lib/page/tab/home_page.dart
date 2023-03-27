@@ -10,6 +10,7 @@ import 'package:copy_bili_demo/widget/navigation_bar.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
 import '../../core/sk_state.dart';
+import '../../http/dao/ranking_dao.dart';
 
 class HomePage extends StatefulWidget {
   final ValueChanged<int>? onJumpTo;

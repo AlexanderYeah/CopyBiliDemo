@@ -1,3 +1,5 @@
+import 'package:copy_bili_demo/http/dao/ranking_dao.dart';
+import 'package:copy_bili_demo/page/tab/ranking_tab_page.dart';
 import 'package:copy_bili_demo/util/color.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,7 @@ class _RankingPageState extends State<RankingPage>
         child: TabBarView(
             controller: _controller,
             children: tabs.map((e) {
-              return Text("data");
+              return RankingTabPage();
             }).toList()));
   }
 

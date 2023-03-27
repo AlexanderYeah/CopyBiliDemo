@@ -18,4 +18,10 @@ class RegisterRequest extends BaseRequest {
     // TODO: implement path
     return "user/register";
   }
+
+  @override
+  String domain() {
+    // TODO: implement domain
+    return "mockapi.eolink.com";
+  }
 }

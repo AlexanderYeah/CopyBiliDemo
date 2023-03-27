@@ -14,7 +14,7 @@ abstract class BaseRequest {
   var pathParams;
   var useHttps = true;
 // https://mockapi.eolink.com/GwXjH2Pcb2d5a8f8129d761e0215f79b289e468a67d2359/user/login
-  String domain() => "mockapi.eolink.com";
+  String domain();
   // 定义方法给派生类去实现
   HttpMethod httpMethod();
   String path();
@@ -41,6 +41,7 @@ abstract class BaseRequest {
     if (isNeedLogin()) {
       addHeader("access_token", SKCache.getInstance().get("access_token")!);
     }
+
     print(uri.toString());
     return uri.toString();
   }

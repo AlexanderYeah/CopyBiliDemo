@@ -1,6 +1,6 @@
 import 'package:copy_bili_demo/http/request/base_request.dart';
 
-class HomeRequest extends BaseRequest {
+class ProfileRequest extends BaseRequest {
   @override
   HttpMethod httpMethod() {
     // TODO: implement httpMethod
@@ -16,12 +16,12 @@ class HomeRequest extends BaseRequest {
   @override
   String path() {
     // TODO: implement path
-    return "/GwXjH2Pcb2d5a8f8129d761e0215f79b289e468a67d2359/homeList";
+    return "/GwXjH2Pcb2d5a8f8129d761e0215f79b289e468a67d2359";
   }
 
   @override
   String domain() {
     // TODO: implement domain
-    return "mockapi.eolink.com";
+    return "result.eolink.com";
   }
 }

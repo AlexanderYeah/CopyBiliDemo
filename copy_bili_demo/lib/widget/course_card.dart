@@ -66,7 +66,12 @@ class CourseCard extends StatelessWidget {
       var width =
           (MediaQuery.of(context).size.width - 20 - (list.length - 1) * 5) /
               list.length;
-      var height = width / 16 * 6;
+
+      var height = width / 16 * 8;
+      // 这里可以根据item的数量去返回不同的高度
+      if (list.length == 1) {
+        height = width / 16 * 5;
+      }
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

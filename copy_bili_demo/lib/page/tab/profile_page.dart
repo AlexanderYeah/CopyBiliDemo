@@ -3,6 +3,7 @@ import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/profile_model.dart';
 import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
+import 'package:copy_bili_demo/widget/course_card.dart';
 import 'package:copy_bili_demo/widget/sk_banner.dart';
 import 'package:copy_bili_demo/widget/sk_blur.dart';
 import 'package:flutter/material.dart';
@@ -100,9 +101,7 @@ class _ProfilePageState extends State<ProfilePage>
             }),
             body: ListView(
               padding: EdgeInsets.only(top: 10),
-              children: <Widget>[
-                _buildContentList(),
-              ],
+              children: _buildContentList(),
             )));
   }
 
@@ -143,8 +142,14 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   _buildContentList() {
-    if (_profileModel == null) return Text("");
-    return _buildBanner();
+    if (_profileModel == null) return <Widget>[Text("")];
+    return <Widget>[
+      _buildBanner(),
+      SizedBox(
+        height: 15,
+      ),
+      CourseCard(courseList: _profileModel!.courselist!)
+    ];
   }
 
   _buildBanner() {

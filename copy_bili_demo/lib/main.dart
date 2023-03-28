@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:copy_bili_demo/db/sk_cache.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
+import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/gestures.dart';
 import './util/color.dart';
@@ -52,7 +53,9 @@ class _MyAppState extends State<MyApp> {
               );
         return MaterialApp(
           home: widget,
-          theme: ThemeData(primarySwatch: whiteColor),
+          theme: ThemeProvider().getTheme(),
+          darkTheme: ThemeProvider().getTheme(isDarkMode: true),
+          themeMode: ThemeProvider().getThemeMode(),
         );
       },
     );

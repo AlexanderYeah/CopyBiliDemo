@@ -97,7 +97,6 @@ class CourseCard extends StatelessWidget {
         print("点击事件");
         // 加载对应的链接
         final Uri toLaunch = Uri.parse(mo.url!);
-
         _launchInWebViewWithoutDomStorage(toLaunch);
       },
       child: Padding(

@@ -10,6 +10,7 @@ class ProfileDao {
     request.add("uri", "profileInfo");
     var result = await SKNet.getInstance().fire(request);
     var d_result = jsonDecode(result);
+
     return ProfileModel.fromJson(d_result);
   }
 }

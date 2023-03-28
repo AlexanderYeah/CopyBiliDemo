@@ -3,6 +3,7 @@ import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/profile_model.dart';
 import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
+import 'package:copy_bili_demo/widget/benifit_card.dart';
 import 'package:copy_bili_demo/widget/course_card.dart';
 import 'package:copy_bili_demo/widget/sk_banner.dart';
 import 'package:copy_bili_demo/widget/sk_blur.dart';
@@ -146,9 +147,13 @@ class _ProfilePageState extends State<ProfilePage>
     return <Widget>[
       _buildBanner(),
       SizedBox(
-        height: 15,
+        height: 10,
       ),
-      CourseCard(courseList: _profileModel!.courselist!)
+      CourseCard(courseList: _profileModel!.courselist!),
+      SizedBox(
+        height: 2,
+      ),
+      BenefitCard(),
     ];
   }
 

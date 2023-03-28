@@ -1,6 +1,7 @@
 import 'package:copy_bili_demo/model/profile_model.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CourseCard extends StatelessWidget {
   final List<CourseMo> courseList;
@@ -66,7 +67,6 @@ class CourseCard extends StatelessWidget {
       var width =
           (MediaQuery.of(context).size.width - 20 - (list.length - 1) * 5) /
               list.length;
-
       var height = width / 16 * 8;
       // 这里可以根据item的数量去返回不同的高度
       if (list.length == 1) {
@@ -81,10 +81,24 @@ class CourseCard extends StatelessWidget {
     });
   }
 
+  Future<void> _launchInWebViewWithoutDomStorage(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.inAppWebView,
+      webViewConfiguration: const WebViewConfiguration(enableDomStorage: false),
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   _buildCardItem(CourseMo mo, width, height) {
     return InkWell(
       onTap: () {
         print("点击事件");
+        // 加载对应的链接
+        final Uri toLaunch = Uri.parse(mo.url!);
+
+        _launchInWebViewWithoutDomStorage(toLaunch);
       },
       child: Padding(
         padding: EdgeInsets.only(right: 5, bottom: 12),

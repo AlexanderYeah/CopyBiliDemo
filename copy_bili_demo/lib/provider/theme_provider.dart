@@ -11,8 +11,11 @@ extension ThemeModeExtension on ThemeMode {
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode? _themeMode;
+  // 判断当前是否是dark mode
+  bool isDark() => _themeMode == ThemeMode.dark;
   // 获取mode的方式
   ThemeMode getThemeMode() {
+    // 从本地缓存中读取设置过的主题
     String theme = SKCache.getInstance().get(SKConstants.theme) as String;
     switch (theme) {
       case "Dark":

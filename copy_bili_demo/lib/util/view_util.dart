@@ -14,8 +14,8 @@ Widget cachedImage(String url, {double? width, double? height}) {
 }
 
 // 底部的阴影
-BoxDecoration bottomBoxShadow() {
-  return BoxDecoration(color: Colors.white, boxShadow: [
+BoxDecoration bottomBoxShadow(unseletedColor) {
+  return BoxDecoration(color: unseletedColor, boxShadow: [
     BoxShadow(
       color: Colors.grey,
       offset: Offset(0, 5), // xy轴的便宜

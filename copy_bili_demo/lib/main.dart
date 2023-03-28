@@ -6,6 +6,7 @@ import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
 import './util/color.dart';
 import 'package:flutter/material.dart';
 import './http/dao/login_dao.dart';
@@ -15,6 +16,7 @@ import './page/tab/home_page.dart';
 import './model/video_model.dart';
 import './page/video_detail_page.dart';
 import './navigator/bottom_navigator.dart';
+import './provider/sk_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,12 +53,16 @@ class _MyAppState extends State<MyApp> {
                   child: CircularProgressIndicator(),
                 ),
               );
-        return MaterialApp(
-          home: widget,
-          theme: ThemeProvider().getTheme(),
-          darkTheme: ThemeProvider().getTheme(isDarkMode: true),
-          themeMode: ThemeProvider().getThemeMode(),
-        );
+        return MultiProvider(
+            providers: topProviders,
+            child: Consumer<ThemeProvider>(builder: (context, provider, child) {
+              return MaterialApp(
+                home: widget,
+                theme: provider.getTheme(),
+                darkTheme: provider.getTheme(isDarkMode: true),
+                themeMode: provider.getThemeMode(),
+              );
+            }));
       },
     );
   }

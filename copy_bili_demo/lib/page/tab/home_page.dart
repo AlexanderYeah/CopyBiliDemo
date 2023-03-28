@@ -4,6 +4,7 @@ import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/page/home_tab_page.dart';
+import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/util/color.dart';
 import 'package:copy_bili_demo/widget/loading_container.dart';
 import 'package:copy_bili_demo/widget/navigation_bar.dart';
@@ -11,6 +12,7 @@ import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
 import '../../core/sk_state.dart';
 import '../../http/dao/ranking_dao.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   final ValueChanged<int>? onJumpTo;
@@ -66,11 +68,11 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  _tabbar() {
+  _tabbar(unselectedColor) {
     return TabBar(
         controller: _controller!,
         isScrollable: true,
-        unselectedLabelColor: Colors.black,
+        unselectedLabelColor: unselectedColor,
         labelColor: primaryColor,
         indicator: UnderlineTabIndicator(
             borderSide: BorderSide(color: primaryColor, width: 2),
@@ -92,7 +94,6 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
         children: [
           InkWell(
             onTap: () {
-              print("object");
               if (widget.onJumpTo != null) {
                 widget.onJumpTo!(3);
               }
@@ -139,6 +140,10 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider themeProvider = context.watch<ThemeProvider>();
+    var unselectedColor =
+        themeProvider.isDark() ? Colors.white : Colors.black54;
+
     return Scaffold(
         body: LoadingContainer(
             isLoading: false,
@@ -151,7 +156,7 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 0),
-                  child: _tabbar(),
+                  child: _tabbar(unselectedColor),
                 ),
                 // tabbarView 和 tabbar 配合使用
                 // tabbarView 和 tabbar 之所以能够联动 是因为共同一个controller

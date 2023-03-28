@@ -1,8 +1,10 @@
 import 'package:copy_bili_demo/http/dao/ranking_dao.dart';
 import 'package:copy_bili_demo/page/tab/ranking_tab_page.dart';
+import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/util/color.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -22,14 +24,14 @@ class _RankingPageState extends State<RankingPage>
     _controller = TabController(length: tabs.length, vsync: this);
   }
 
-  _buildTabBar() {
+  _buildTabBar(unseletedColor) {
     return Container(
       width: 200,
       child: TabBar(
           controller: _controller,
           labelColor: primaryColor,
           isScrollable: false,
-          unselectedLabelColor: Colors.black,
+          unselectedLabelColor: unseletedColor,
           indicator: UnderlineTabIndicator(
               borderSide: BorderSide(color: primaryColor, width: 2),
               insets: EdgeInsets.only(left: 10, right: 10)),
@@ -56,6 +58,9 @@ class _RankingPageState extends State<RankingPage>
 
   @override
   Widget build(BuildContext context) {
+    ThemeProvider provider = context.watch<ThemeProvider>();
+    var unseletedColor = provider.isDark() ? Colors.white : Colors.black54;
+    var bgColor = provider.isDark() ? Colors.black : Colors.white;
     return Scaffold(
       body: Column(
         children: [
@@ -63,8 +68,8 @@ class _RankingPageState extends State<RankingPage>
           Container(
             alignment: Alignment.center,
             margin: EdgeInsets.only(top: 30),
-            child: _buildTabBar(),
-            decoration: bottomBoxShadow(),
+            child: _buildTabBar(unseletedColor),
+            decoration: bottomBoxShadow(bgColor),
           ),
           _buildTabView(),
         ],

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:copy_bili_demo/db/sk_cache.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
+import 'package:copy_bili_demo/page/dark_mode.dart';
 import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/gestures.dart';
@@ -137,6 +138,8 @@ class BiliRouteDelegate extends RouterDelegate<BiliRoutePath>
       page = pageWrap(RegisterPage());
     } else if (routeStatus == RouteStatus.login) {
       page = pageWrap(LoginPage());
+    } else if (routeStatus == RouteStatus.darkMode) {
+      page = pageWrap(DarkModePage());
     }
 
     // 重新创建一个数组 否则pages 因为引用没有改变路由而不会生效

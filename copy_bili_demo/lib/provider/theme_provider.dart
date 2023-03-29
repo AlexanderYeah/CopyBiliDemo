@@ -7,7 +7,7 @@ import 'package:flutter/scheduler.dart';
 
 // 扩展themeMode
 extension ThemeModeExtension on ThemeMode {
-  String get value => <String>["System", "Light", "Dart"][index];
+  String get value => <String>["System", "Light", "Dark"][index];
 }
 
 class ThemeProvider extends ChangeNotifier {
@@ -41,14 +41,11 @@ class ThemeProvider extends ChangeNotifier {
       case "Dark":
         _themeMode = ThemeMode.dark;
         break;
-      case "Light":
-        _themeMode = ThemeMode.light;
-        break;
       case "System":
         _themeMode = ThemeMode.system;
         break;
       default:
-        _themeMode = ThemeMode.system;
+        _themeMode = ThemeMode.light;
         break;
     }
     return _themeMode!;

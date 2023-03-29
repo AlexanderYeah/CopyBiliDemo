@@ -2,6 +2,8 @@ import 'package:copy_bili_demo/page/login/login.dart';
 import 'package:copy_bili_demo/page/login/register.dart';
 import 'package:copy_bili_demo/page/tab/home_page.dart';
 import 'package:copy_bili_demo/page/video_detail_page.dart';
+import '../page/dark_mode.dart';
+
 import 'package:flutter/material.dart';
 
 pageWrap(Widget child) {
@@ -9,13 +11,7 @@ pageWrap(Widget child) {
 }
 
 // 定义路由的状态
-enum RouteStatus {
-  home,
-  login,
-  register,
-  detail,
-  unknown,
-}
+enum RouteStatus { home, login, register, detail, unknown, darkMode }
 
 typedef RouteChangeListener = Function(
     RouteStatusInfo current, RouteStatusInfo pre);
@@ -42,6 +38,8 @@ RouteStatus getStatus(MaterialPage page) {
     return RouteStatus.home;
   } else if (page.child is VideoDetailPage) {
     return RouteStatus.detail;
+  } else if (page.child is DarkModePage) {
+    return RouteStatus.darkMode;
   } else {
     return RouteStatus.unknown;
   }

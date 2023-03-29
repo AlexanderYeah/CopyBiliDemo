@@ -1,13 +1,17 @@
 import 'package:copy_bili_demo/http/dao/profile_dao.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/profile_model.dart';
+import 'package:copy_bili_demo/navigator/sk_navigator.dart';
+import 'package:copy_bili_demo/provider/theme_provider.dart';
 import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:copy_bili_demo/widget/benifit_card.dart';
 import 'package:copy_bili_demo/widget/course_card.dart';
 import 'package:copy_bili_demo/widget/sk_banner.dart';
 import 'package:copy_bili_demo/widget/sk_blur.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -154,7 +158,39 @@ class _ProfilePageState extends State<ProfilePage>
         height: 2,
       ),
       BenefitCard(),
+      // 夜间模式的入口
+      _buldDarkModeItem()
     ];
+  }
+
+  _buldDarkModeItem() {
+    // 读取主题 显示不同的按钮
+    var themeProvider = context.watch<ThemeProvider>();
+    return InkWell(
+      onTap: () {
+        SKNavigator.getIntance().onJumpTo(RouteStatus.darkMode);
+      },
+      child: Container(
+        padding: EdgeInsets.only(left: 20),
+        child: Row(
+          children: [
+            Text(
+              "夜间模式",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5, bottom: 5),
+              child: Icon(themeProvider.isDark()
+                  ? Icons.nightlight_round
+                  : Icons.sunny),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   _buildBanner() {

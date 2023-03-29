@@ -21,7 +21,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
+class _HomePageState extends SKState<HomePage>
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   var listener;
   var tabs = ["推荐", "热门", "追播", "影视", "搞笑", "日常", "综合", "手机游戏", "短片*手机*配音"];
   List _catrgoryList = [];
@@ -34,6 +35,15 @@ class _HomePageState extends SKState<HomePage> with TickerProviderStateMixin {
     // TODO: implement initState
     super.initState();
     _loadData();
+  }
+
+// 监听系统的dark mode 发生变化
+// with  WidgetsBindingObserver
+  void didChangePlatformBrightness() {
+    // 系统模式变化 通知变化
+    // 只要不是在build 方法里面 都可以调用read
+    context.read<ThemeProvider>().darkModeChange();
+    super.didChangePlatformBrightness();
   }
 
   // 加载数据

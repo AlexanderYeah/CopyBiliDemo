@@ -1,9 +1,7 @@
 import 'dart:convert';
-
-import 'package:copy_bili_demo/http/core/sk_net.dart';
 import 'package:copy_bili_demo/http/request/login_request.dart';
 import 'package:copy_bili_demo/http/request/ranking_request.dart';
-
+import 'package:sk_net/sk_net.dart';
 import '../../model/ranking_model.dart';
 
 class RankingDao {

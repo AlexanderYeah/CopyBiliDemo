@@ -1,7 +1,4 @@
 // 定义请求方法一个枚举
-import 'package:copy_bili_demo/http/core/sk_error.dart';
-
-import '../../db/sk_cache.dart';
 import 'package:flutter/widgets.dart';
 
 enum HttpMethod {
@@ -38,9 +35,9 @@ abstract class BaseRequest {
     }
 
     // 如果接口需要登录的地方 这里添加access_token
-    if (isNeedLogin()) {
-      addHeader("access_token", SKCache.getInstance().get("access_token")!);
-    }
+    // if (isNeedLogin()) {
+    //   addHeader("access_token", SKCache.getInstance().get("access_token")!);
+    // }
 
     print(uri.toString());
     return uri.toString();

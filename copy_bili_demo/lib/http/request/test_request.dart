@@ -1,4 +1,4 @@
-import '/http/request/base_request.dart';
+import 'package:sk_net/request/base_request.dart';
 
 class TestRequest extends BaseRequest {
   @override

@@ -1,10 +1,10 @@
 // 这个是请求工具类
-import 'sk_error.dart';
+import 'core/sk_error.dart';
 
-import '../request/base_request.dart';
-import 'sk_net_adapter.dart';
-import 'mock_adaper.dart';
-import 'dio_adapter.dart';
+import 'request/base_request.dart';
+import 'core/sk_net_adapter.dart';
+import 'core/mock_adaper.dart';
+import 'core/dio_adapter.dart';
 
 class SKNet {
   SKNet._();

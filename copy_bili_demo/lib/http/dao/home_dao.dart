@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:copy_bili_demo/http/core/sk_net.dart';
 import 'package:copy_bili_demo/http/request/home_request.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
+import 'package:sk_net/sk_net.dart';
 
 class HomeDao {
   static get(String categoryName, {int pageIndex = 1, pageSize = 1}) async {

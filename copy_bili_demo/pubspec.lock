@@ -422,6 +422,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.5"
+  sk_net:
+    dependency: "direct main"
+    description:
+      path: "component/sk_net"
+      relative: true
+    source: path
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter

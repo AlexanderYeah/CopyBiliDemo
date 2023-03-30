@@ -1,4 +1,4 @@
-import 'package:copy_bili_demo/http/request/base_request.dart';
+import 'package:sk_net/request/base_request.dart';
 
 class RankingRequest extends BaseRequest {
   @override

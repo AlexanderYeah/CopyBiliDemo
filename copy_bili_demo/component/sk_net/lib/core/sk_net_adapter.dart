@@ -1,6 +1,4 @@
 import 'dart:convert';
-import '/http/core/sk_net.dart';
-
 import '../request/base_request.dart';
 
 abstract class SKNetAdapter {

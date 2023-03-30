@@ -1,9 +1,9 @@
-import 'package:copy_bili_demo/http/core/sk_error.dart';
 import 'package:copy_bili_demo/http/dao/home_dao.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/util/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:sk_net/core/sk_error.dart';
 import '../../widget/sk_banner.dart';
 import '../widget/video_card.dart';
 

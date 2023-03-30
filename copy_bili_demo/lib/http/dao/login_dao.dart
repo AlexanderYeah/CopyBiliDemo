@@ -1,10 +1,8 @@
 import 'dart:convert';
+import 'package:sk_net/request/base_request.dart';
+import 'package:sk_net/sk_net.dart';
 
 import '../../db/sk_cache.dart';
-
-import '/http/core/sk_net.dart';
-import 'package:copy_bili_demo/http/request/base_request.dart';
-
 import '../request/login_request.dart';
 import '../request/register_request.dart';
 

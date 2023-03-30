@@ -1,4 +1,4 @@
-import 'base_request.dart';
+import 'package:sk_net/request/base_request.dart';
 
 class RegisterRequest extends BaseRequest {
   @override

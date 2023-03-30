@@ -1,9 +1,9 @@
 import 'dart:ffi';
 import 'dart:math';
-
 import 'package:copy_bili_demo/core/sk_state.dart';
-import 'package:copy_bili_demo/http/core/sk_error.dart';
+
 import 'package:flutter/material.dart';
+import 'package:sk_net/core/sk_error.dart';
 import '../util/color.dart';
 
 // M 为 Dao 返回的数据模型 L为列表数据模型 T 为 具体的Widget

@@ -1,4 +1,3 @@
-import 'package:copy_bili_demo/http/core/sk_error.dart';
 import 'package:copy_bili_demo/http/dao/home_dao.dart';
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
@@ -10,6 +9,7 @@ import 'package:copy_bili_demo/widget/loading_container.dart';
 import 'package:copy_bili_demo/widget/navigation_bar.dart';
 import 'package:copy_bili_demo/widget/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:sk_net/core/sk_error.dart';
 import '../../core/sk_state.dart';
 import '../../http/dao/ranking_dao.dart';
 import 'package:provider/provider.dart';

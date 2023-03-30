@@ -1,5 +1,4 @@
-import '/http/request/base_request.dart';
-
+import '../request/base_request.dart';
 import 'sk_net_adapter.dart';
 
 class MockAdapter extends SKNetAdapter {

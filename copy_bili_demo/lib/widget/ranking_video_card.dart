@@ -1,7 +1,8 @@
 import 'package:copy_bili_demo/model/ranking_model.dart';
 import 'package:copy_bili_demo/util/color.dart';
-import 'package:copy_bili_demo/util/format_util.dart';
+
 import 'package:flutter/material.dart';
+import 'package:sk_base/format_util.dart';
 
 class RankingVideoCard extends StatefulWidget {
   final VideoMo videoMo;

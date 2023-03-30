@@ -3,7 +3,6 @@ import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/profile_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
 import 'package:copy_bili_demo/provider/theme_provider.dart';
-import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:copy_bili_demo/widget/benifit_card.dart';
 import 'package:copy_bili_demo/widget/course_card.dart';
@@ -12,6 +11,7 @@ import 'package:copy_bili_demo/widget/sk_blur.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sk_base/format_util.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

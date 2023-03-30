@@ -1,9 +1,9 @@
 import 'package:copy_bili_demo/model/home_model.dart';
 import 'package:copy_bili_demo/model/video_model.dart';
 import 'package:copy_bili_demo/navigator/sk_navigator.dart';
-import 'package:copy_bili_demo/util/format_util.dart';
 import 'package:copy_bili_demo/util/view_util.dart';
 import 'package:flutter/material.dart';
+import 'package:sk_base/format_util.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class VideoCard extends StatelessWidget {

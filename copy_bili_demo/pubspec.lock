@@ -422,6 +422,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.5"
+  sk_base:
+    dependency: "direct main"
+    description:
+      path: "component/sk_base"
+      relative: true
+    source: path
+    version: "0.0.1"
   sk_net:
     dependency: "direct main"
     description:
